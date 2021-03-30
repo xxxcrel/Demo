@@ -43,14 +43,17 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
+def GRPC_GENERATED_DIR = 'grpc'
+
 sourceSets{
     main{
         java{
-            srcDirs 'build/generated/source/proto/main/grpc'
-            srcDirs 'build/generated/source/proto/main/java'
+            srcDirs "${GRPC_GENERATED_DIR}/main/java"
+            srcDirs "${GRPC_GENERATED_DIR}/main/grpc"
         }
     }
 }
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.12.0"
@@ -65,7 +68,9 @@ protobuf {
             grpc {}
         }
     }
+    generatedFilesBaseDir = GRPC_GENERATED_DIR
 }
+
 test {
     useJUnitPlatform()
 }
