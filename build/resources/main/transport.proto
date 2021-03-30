@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "beer.cheese.grpc.transport";
+
+service HelloService{
+  rpc GetFeature(Point) returns (Feature){}
+  rpc ListFeatures(Rectangle) returns (stream Feature) {}
+}
+
+message Feature{
+
+}
+
+message Rectangle{
+
+}
+
+message Point{
+  int32 latitude = 1;
+  int32 longitude = 2;
+}

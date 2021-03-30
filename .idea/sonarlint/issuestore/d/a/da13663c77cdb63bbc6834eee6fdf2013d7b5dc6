@@ -1,0 +1,13 @@
+
+‡
+java:S1128"eRemove this unused import 'org.springframework.security.config.annotation.web.WebSecurityConfigurer'.(µØ…­ıÿÿÿÿ8óš©á†/
+x
+java:S1128
+"[Remove this unused import 'org.springframework.security.config.annotation.SecurityBuilder'.(¹´à8óš©á†/
+L
+java:S3740/"/Provide the parametrized type for this generic.(‘Ùğâ8óš©á†/
+L
+java:S37405"/Provide the parametrized type for this generic.(¯‘¯î8óš©á†/
+
+java:S1128"dRemove this unused import 'org.springframework.security.config.annotation.web.builders.WebSecurity'.(–ëğ8óš©á†/
+]	java:S125 "<This block of commented-out lines of code should be removed.(»•ûÿÿÿÿ8Ùû¿ê†/
