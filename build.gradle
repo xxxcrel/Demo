@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id "io.freefair.lombok" version "5.3.0"
@@ -15,38 +16,48 @@ repositories {
 }
 
 dependencies {
+    //junit5
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testImplementation ('org.springframework.boot:spring-boot-starter-test'){
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
     }
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.1'
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 
-//    implementation 'junit:junit:4.13'
+//    testImplementation 'junit:junit:4.13'
+//    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    //elasticsearch client and data elasticsearch
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.2'
     implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.6.2'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-
+    //spring mvc
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //data jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //spring security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-acl'
-    implementation 'io.netty:netty-all:4.1.52.Final'
+    //vertx
+    implementation 'io.vertx:vertx-web:4.0.3'
+    //H2Database
     implementation 'com.h2database:h2:1.4.200'
     implementation 'org.apache.commons:commons-dbcp2:2.7.0'
+    //lombok
     implementation 'org.projectlombok:lombok:1.18.16'
+    //OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-
+    //gRPC
     implementation 'io.grpc:grpc-netty-shaded:1.36.0'
     implementation 'io.grpc:grpc-protobuf:1.36.0'
     implementation 'io.grpc:grpc-stub:1.36.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
-
+    //RxJava
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.11'
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
-
 def GRPC_GENERATED_DIR = 'grpc'
 
 sourceSets{
@@ -77,4 +88,9 @@ protobuf {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport{
+    dependsOn test
 }

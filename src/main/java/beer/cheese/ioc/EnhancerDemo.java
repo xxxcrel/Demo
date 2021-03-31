@@ -1,4 +1,4 @@
-package beer.cheese.core;
+package beer.cheese.ioc;
 
 import org.springframework.cglib.core.DebuggingClassWriter;
 import org.springframework.cglib.proxy.Enhancer;

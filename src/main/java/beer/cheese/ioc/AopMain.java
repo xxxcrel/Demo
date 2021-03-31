@@ -1,7 +1,8 @@
-package beer.cheese.core;
+package beer.cheese.ioc;
 
 import org.springframework.cglib.core.DebuggingClassWriter;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
 
 public class AopMain {
     public static void main(String[] args) {

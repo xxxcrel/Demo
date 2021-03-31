@@ -1,4 +1,4 @@
-package beer.cheese.properties;
+package beer.cheese.springboot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

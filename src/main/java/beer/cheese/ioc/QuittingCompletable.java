@@ -1,4 +1,4 @@
-package beer.cheese.core;
+package beer.cheese.ioc;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
