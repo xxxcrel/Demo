@@ -1,5 +1,3 @@
 beer:
   cheese:
     app-name: hello
-logging:
-  level: off

@@ -23,6 +23,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "Post")
 @Table(name = "tbl_post")
@@ -32,6 +33,7 @@ import lombok.Setter;
 //@AllArgsConstructor
 @Getter
 @Setter
+@ToString(exclude = {"images", "comments"})
 @NoArgsConstructor
 @NamedEntityGraph(
         name = "Post.details",

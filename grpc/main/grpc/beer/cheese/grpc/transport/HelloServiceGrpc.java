@@ -14,66 +14,128 @@ public final class HelloServiceGrpc {
   public static final String SERVICE_NAME = "HelloService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Point,
-      beer.cheese.grpc.transport.Transport.Feature> getGetFeatureMethod;
+  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getUnaryMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetFeature",
-      requestType = beer.cheese.grpc.transport.Transport.Point.class,
-      responseType = beer.cheese.grpc.transport.Transport.Feature.class,
+      fullMethodName = SERVICE_NAME + '/' + "unary",
+      requestType = beer.cheese.grpc.transport.Transport.Request.class,
+      responseType = beer.cheese.grpc.transport.Transport.Response.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Point,
-      beer.cheese.grpc.transport.Transport.Feature> getGetFeatureMethod() {
-    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Point, beer.cheese.grpc.transport.Transport.Feature> getGetFeatureMethod;
-    if ((getGetFeatureMethod = HelloServiceGrpc.getGetFeatureMethod) == null) {
+  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getUnaryMethod() {
+    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response> getUnaryMethod;
+    if ((getUnaryMethod = HelloServiceGrpc.getUnaryMethod) == null) {
       synchronized (HelloServiceGrpc.class) {
-        if ((getGetFeatureMethod = HelloServiceGrpc.getGetFeatureMethod) == null) {
-          HelloServiceGrpc.getGetFeatureMethod = getGetFeatureMethod =
-              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Point, beer.cheese.grpc.transport.Transport.Feature>newBuilder()
+        if ((getUnaryMethod = HelloServiceGrpc.getUnaryMethod) == null) {
+          HelloServiceGrpc.getUnaryMethod = getUnaryMethod =
+              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetFeature"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "unary"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  beer.cheese.grpc.transport.Transport.Point.getDefaultInstance()))
+                  beer.cheese.grpc.transport.Transport.Request.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  beer.cheese.grpc.transport.Transport.Feature.getDefaultInstance()))
-              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("GetFeature"))
+                  beer.cheese.grpc.transport.Transport.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("unary"))
               .build();
         }
       }
     }
-    return getGetFeatureMethod;
+    return getUnaryMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Rectangle,
-      beer.cheese.grpc.transport.Transport.Feature> getListFeaturesMethod;
+  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getClientStreamMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "ListFeatures",
-      requestType = beer.cheese.grpc.transport.Transport.Rectangle.class,
-      responseType = beer.cheese.grpc.transport.Transport.Feature.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Rectangle,
-      beer.cheese.grpc.transport.Transport.Feature> getListFeaturesMethod() {
-    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Rectangle, beer.cheese.grpc.transport.Transport.Feature> getListFeaturesMethod;
-    if ((getListFeaturesMethod = HelloServiceGrpc.getListFeaturesMethod) == null) {
+      fullMethodName = SERVICE_NAME + '/' + "clientStream",
+      requestType = beer.cheese.grpc.transport.Transport.Request.class,
+      responseType = beer.cheese.grpc.transport.Transport.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getClientStreamMethod() {
+    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response> getClientStreamMethod;
+    if ((getClientStreamMethod = HelloServiceGrpc.getClientStreamMethod) == null) {
       synchronized (HelloServiceGrpc.class) {
-        if ((getListFeaturesMethod = HelloServiceGrpc.getListFeaturesMethod) == null) {
-          HelloServiceGrpc.getListFeaturesMethod = getListFeaturesMethod =
-              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Rectangle, beer.cheese.grpc.transport.Transport.Feature>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ListFeatures"))
+        if ((getClientStreamMethod = HelloServiceGrpc.getClientStreamMethod) == null) {
+          HelloServiceGrpc.getClientStreamMethod = getClientStreamMethod =
+              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "clientStream"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  beer.cheese.grpc.transport.Transport.Rectangle.getDefaultInstance()))
+                  beer.cheese.grpc.transport.Transport.Request.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  beer.cheese.grpc.transport.Transport.Feature.getDefaultInstance()))
-              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("ListFeatures"))
+                  beer.cheese.grpc.transport.Transport.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("clientStream"))
               .build();
         }
       }
     }
-    return getListFeaturesMethod;
+    return getClientStreamMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getServerStreamMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverStream",
+      requestType = beer.cheese.grpc.transport.Transport.Request.class,
+      responseType = beer.cheese.grpc.transport.Transport.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getServerStreamMethod() {
+    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response> getServerStreamMethod;
+    if ((getServerStreamMethod = HelloServiceGrpc.getServerStreamMethod) == null) {
+      synchronized (HelloServiceGrpc.class) {
+        if ((getServerStreamMethod = HelloServiceGrpc.getServerStreamMethod) == null) {
+          HelloServiceGrpc.getServerStreamMethod = getServerStreamMethod =
+              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "serverStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  beer.cheese.grpc.transport.Transport.Request.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  beer.cheese.grpc.transport.Transport.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("serverStream"))
+              .build();
+        }
+      }
+    }
+    return getServerStreamMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getBidirectionalMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "bidirectional",
+      requestType = beer.cheese.grpc.transport.Transport.Request.class,
+      responseType = beer.cheese.grpc.transport.Transport.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request,
+      beer.cheese.grpc.transport.Transport.Response> getBidirectionalMethod() {
+    io.grpc.MethodDescriptor<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response> getBidirectionalMethod;
+    if ((getBidirectionalMethod = HelloServiceGrpc.getBidirectionalMethod) == null) {
+      synchronized (HelloServiceGrpc.class) {
+        if ((getBidirectionalMethod = HelloServiceGrpc.getBidirectionalMethod) == null) {
+          HelloServiceGrpc.getBidirectionalMethod = getBidirectionalMethod =
+              io.grpc.MethodDescriptor.<beer.cheese.grpc.transport.Transport.Request, beer.cheese.grpc.transport.Transport.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "bidirectional"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  beer.cheese.grpc.transport.Transport.Request.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  beer.cheese.grpc.transport.Transport.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new HelloServiceMethodDescriptorSupplier("bidirectional"))
+              .build();
+        }
+      }
+    }
+    return getBidirectionalMethod;
   }
 
   /**
@@ -126,34 +188,62 @@ public final class HelloServiceGrpc {
 
     /**
      */
-    public void getFeature(beer.cheese.grpc.transport.Transport.Point request,
-        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFeatureMethod(), responseObserver);
+    public void unary(beer.cheese.grpc.transport.Transport.Request request,
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUnaryMethod(), responseObserver);
     }
 
     /**
      */
-    public void listFeatures(beer.cheese.grpc.transport.Transport.Rectangle request,
-        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListFeaturesMethod(), responseObserver);
+    public io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Request> clientStream(
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getClientStreamMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void serverStream(beer.cheese.grpc.transport.Transport.Request request,
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerStreamMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Request> bidirectional(
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getBidirectionalMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getGetFeatureMethod(),
+            getUnaryMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                beer.cheese.grpc.transport.Transport.Point,
-                beer.cheese.grpc.transport.Transport.Feature>(
-                  this, METHODID_GET_FEATURE)))
+                beer.cheese.grpc.transport.Transport.Request,
+                beer.cheese.grpc.transport.Transport.Response>(
+                  this, METHODID_UNARY)))
           .addMethod(
-            getListFeaturesMethod(),
+            getClientStreamMethod(),
+            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+              new MethodHandlers<
+                beer.cheese.grpc.transport.Transport.Request,
+                beer.cheese.grpc.transport.Transport.Response>(
+                  this, METHODID_CLIENT_STREAM)))
+          .addMethod(
+            getServerStreamMethod(),
             io.grpc.stub.ServerCalls.asyncServerStreamingCall(
               new MethodHandlers<
-                beer.cheese.grpc.transport.Transport.Rectangle,
-                beer.cheese.grpc.transport.Transport.Feature>(
-                  this, METHODID_LIST_FEATURES)))
+                beer.cheese.grpc.transport.Transport.Request,
+                beer.cheese.grpc.transport.Transport.Response>(
+                  this, METHODID_SERVER_STREAM)))
+          .addMethod(
+            getBidirectionalMethod(),
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+              new MethodHandlers<
+                beer.cheese.grpc.transport.Transport.Request,
+                beer.cheese.grpc.transport.Transport.Response>(
+                  this, METHODID_BIDIRECTIONAL)))
           .build();
     }
   }
@@ -174,18 +264,34 @@ public final class HelloServiceGrpc {
 
     /**
      */
-    public void getFeature(beer.cheese.grpc.transport.Transport.Point request,
-        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature> responseObserver) {
+    public void unary(beer.cheese.grpc.transport.Transport.Request request,
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getGetFeatureMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getUnaryMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void listFeatures(beer.cheese.grpc.transport.Transport.Rectangle request,
-        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature> responseObserver) {
+    public io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Request> clientStream(
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+          getChannel().newCall(getClientStreamMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     */
+    public void serverStream(beer.cheese.grpc.transport.Transport.Request request,
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
-          getChannel().newCall(getListFeaturesMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getServerStreamMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Request> bidirectional(
+        io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
+          getChannel().newCall(getBidirectionalMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -205,17 +311,17 @@ public final class HelloServiceGrpc {
 
     /**
      */
-    public beer.cheese.grpc.transport.Transport.Feature getFeature(beer.cheese.grpc.transport.Transport.Point request) {
+    public beer.cheese.grpc.transport.Transport.Response unary(beer.cheese.grpc.transport.Transport.Request request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetFeatureMethod(), getCallOptions(), request);
+          getChannel(), getUnaryMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public java.util.Iterator<beer.cheese.grpc.transport.Transport.Feature> listFeatures(
-        beer.cheese.grpc.transport.Transport.Rectangle request) {
+    public java.util.Iterator<beer.cheese.grpc.transport.Transport.Response> serverStream(
+        beer.cheese.grpc.transport.Transport.Request request) {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
-          getChannel(), getListFeaturesMethod(), getCallOptions(), request);
+          getChannel(), getServerStreamMethod(), getCallOptions(), request);
     }
   }
 
@@ -235,15 +341,17 @@ public final class HelloServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<beer.cheese.grpc.transport.Transport.Feature> getFeature(
-        beer.cheese.grpc.transport.Transport.Point request) {
+    public com.google.common.util.concurrent.ListenableFuture<beer.cheese.grpc.transport.Transport.Response> unary(
+        beer.cheese.grpc.transport.Transport.Request request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getGetFeatureMethod(), getCallOptions()), request);
+          getChannel().newCall(getUnaryMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_GET_FEATURE = 0;
-  private static final int METHODID_LIST_FEATURES = 1;
+  private static final int METHODID_UNARY = 0;
+  private static final int METHODID_SERVER_STREAM = 1;
+  private static final int METHODID_CLIENT_STREAM = 2;
+  private static final int METHODID_BIDIRECTIONAL = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -262,13 +370,13 @@ public final class HelloServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GET_FEATURE:
-          serviceImpl.getFeature((beer.cheese.grpc.transport.Transport.Point) request,
-              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature>) responseObserver);
+        case METHODID_UNARY:
+          serviceImpl.unary((beer.cheese.grpc.transport.Transport.Request) request,
+              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response>) responseObserver);
           break;
-        case METHODID_LIST_FEATURES:
-          serviceImpl.listFeatures((beer.cheese.grpc.transport.Transport.Rectangle) request,
-              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Feature>) responseObserver);
+        case METHODID_SERVER_STREAM:
+          serviceImpl.serverStream((beer.cheese.grpc.transport.Transport.Request) request,
+              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -280,6 +388,12 @@ public final class HelloServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_CLIENT_STREAM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.clientStream(
+              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response>) responseObserver);
+        case METHODID_BIDIRECTIONAL:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.bidirectional(
+              (io.grpc.stub.StreamObserver<beer.cheese.grpc.transport.Transport.Response>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -331,8 +445,10 @@ public final class HelloServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new HelloServiceFileDescriptorSupplier())
-              .addMethod(getGetFeatureMethod())
-              .addMethod(getListFeaturesMethod())
+              .addMethod(getUnaryMethod())
+              .addMethod(getClientStreamMethod())
+              .addMethod(getServerStreamMethod())
+              .addMethod(getBidirectionalMethod())
               .build();
         }
       }
