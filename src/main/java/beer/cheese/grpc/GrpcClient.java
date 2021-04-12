@@ -22,11 +22,23 @@ public class GrpcClient {
     public static void main(String[] args) {
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:51477").usePlaintext().build();
         GrpcClient client = new GrpcClient(channel);
-        try {
-            Iterator<Transport.Response> response = client.blockingStub.serverStream(Transport.Request.newBuilder().setParams("hello").build());
-            response.forEachRemaining(System.out::println);
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
+        client.fetch();
+    }
+
+    public void fetch(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    Iterator<Transport.Response> response = blockingStub.serverStream(Transport.Request.newBuilder().setParams("hello").build());
+                    while(response.hasNext()){
+                        Transport.Response resp = response.next();
+                        System.out.println(resp.getMessage());
+                    }
+                }
+            }
+        });
+        thread.setDaemon(false);
+        thread.start();
     }
 }
