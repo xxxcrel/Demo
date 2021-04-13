@@ -10,3 +10,5 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 1000
+  profiles:
+    active: jpa

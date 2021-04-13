@@ -41,6 +41,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-acl'
     //vertx
     implementation 'io.vertx:vertx-web:4.0.3'
+    implementation 'mysql:mysql-connector-java:8.0.22'
     //H2Database
     implementation 'com.h2database:h2:1.4.200'
     implementation 'org.apache.commons:commons-dbcp2:2.7.0'
