@@ -4,7 +4,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 
 @ConfigurationProperties(prefix = "beer.cheese")
-@PropertySource("classpath:application.properties")
 public class CheeseProperties {
 
     String name;

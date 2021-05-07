@@ -11,14 +11,15 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class t add EsDemo {
+public class EsDemo {
     @Autowired
     RestHighLevelClient client;
+
     public static void main(String[] args) {
 
     }
 
-    public  void test() throws IOException {
+    public void test() throws IOException {
         BoolQueryBuilder bool = QueryBuilders.boolQuery();
         SearchRequest request = new SearchRequest();
         SearchSourceBuilder builder = new SearchSourceBuilder();

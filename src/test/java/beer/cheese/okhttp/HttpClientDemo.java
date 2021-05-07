@@ -1,5 +1,6 @@
 package beer.cheese.okhttp;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,12 +34,12 @@ public class HttpClientDemo {
     }
 
     @Test
-    public void testVoidResponse() {
+    public void testVoidResponse() throws IOException {
         HttpUtils.get("localhost", "/api/noResponse");
     }
 
     @Test
-    public void testFormRequest() throws JsonProcessingException {
+    public void testFormRequest() throws IOException {
         Map form = new HashMap();
         form.put("name", "wuxc");
         form.put("gender", "male");
@@ -48,7 +49,7 @@ public class HttpClientDemo {
     }
 
     @Test
-    public void testJsonRequest() {
+    public void testJsonRequest() throws IOException {
         Map form = new HashMap();
         form.put("name", "wuxc");
         form.put("gender", "male");
@@ -58,12 +59,12 @@ public class HttpClientDemo {
     }
 
     @Test
-    public void testRowJsonString() {
+    public void testRowJsonString() throws IOException {
         System.out.println(HttpUtils.postJson("http://localhost:8080/api/json", "{\"hello\":\"wuxc\"}"));
     }
 
     @Test
-    public void testRowObject() {
+    public void testRowObject() throws IOException {
         System.out.println(HttpUtils.postJson("http://localhost:8080/api/json", new Data("wuxc", "male", "12")));
     }
 }
