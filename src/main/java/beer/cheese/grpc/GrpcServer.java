@@ -1,36 +1,32 @@
 package beer.cheese.grpc;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import org.springframework.util.ResourceUtils;
 
 import beer.cheese.grpc.transport.HelloServiceGrpc;
 import beer.cheese.grpc.transport.Transport;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.netty.shaded.io.netty.handler.ssl.SslContextBuilder;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GrpcServer{
+public class GrpcServer {
 
     private Server server;
     private int port;
 
-    public GrpcServer(int port){
+    public GrpcServer(int port) {
         this(ServerBuilder.forPort(port), port);
     }
 
-    public GrpcServer(ServerBuilder builder, int port){
+    public GrpcServer(ServerBuilder builder, int port) {
         this.port = port;
         this.server = builder.addService(new GrpcService()).build();
     }
 
-    public  void start() throws IOException {
+    public void start() throws IOException {
         server.start();
         log.info("Server started, listening on " + port);
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -47,6 +43,7 @@ public class GrpcServer{
             }
         });
     }
+
     public void stop() throws InterruptedException {
         if (server != null) {
             server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
@@ -62,13 +59,14 @@ public class GrpcServer{
         }
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         GrpcServer grpcServer = new GrpcServer(51477);
         grpcServer.start();
         grpcServer.blockUntilShutdown();
     }
+
     @CommonsLog
-    private static class GrpcService extends HelloServiceGrpc.HelloServiceImplBase{
+    private static class GrpcService extends HelloServiceGrpc.HelloServiceImplBase {
 
         @Override
         public void unary(Transport.Request request, StreamObserver<Transport.Response> responseObserver) {
@@ -84,11 +82,11 @@ public class GrpcServer{
         public void serverStream(Transport.Request request, StreamObserver<Transport.Response> responseObserver) {
             log.info("client in");
             int count = 10;
-            while(count-- > 0){
+            while (count-- > 0) {
                 log.info("empty while");
-                try{
+                try {
                     TimeUnit.SECONDS.sleep(1);
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }
             }
