@@ -87,7 +87,7 @@ protobuf {
             grpc {}
         }
     }
-    generatedFilesBaseDir = GRPC_GENERATED_DIR
+    generatedFilesBaseDir = "${projectDir}/${GRPC_GENERATED_DIR}"
 }
 
 test {
