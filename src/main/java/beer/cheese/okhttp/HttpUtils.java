@@ -1,8 +1,10 @@
 package beer.cheese.okhttp;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class HttpUtils {
 
@@ -32,7 +35,9 @@ public class HttpUtils {
 
     static {
         try {
-            client = new OkHttpClient.Builder().build();
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(2, TimeUnit.SECONDS)
+                    .build();
             if (logger.isTraceEnabled()) {
                 logger.trace("OkHttpClient init successful!");
             }
@@ -43,20 +48,20 @@ public class HttpUtils {
     }
 
 
-    public static String get(String host, String path) {
+    public static String get(String host, String path) throws IOException {
         String url = HTTP_SCHEMA + host + path;
         Request request = new Request.Builder().url(url).build();
         return internalCall(request);
     }
 
-    public static String postForm(String url, Map<String, String> form) {
+    public static String postForm(String url, Map<String, String> form) throws IOException {
         FormBody.Builder builder = new FormBody.Builder();
         form.forEach(builder::add);
         Request formRequest = new Request.Builder().url(url).post(builder.build()).build();
         return internalCall(formRequest);
     }
 
-    public static String postJson(String url, Object obj) {
+    public static String postJson(String url, Object obj) throws IOException {
         String jsonString = null;
         try {
             jsonString = mapper.writeValueAsString(obj);
@@ -66,7 +71,7 @@ public class HttpUtils {
         return postJson(url, jsonString);
     }
 
-    public static String postJson(String url, String jsonString) {
+    public static String postJson(String url, String jsonString) throws IOException {
         Assert.isTrue(url.contains(HTTP_SCHEMA) || url.contains(HTTPS_SCHEMA), "Http schema not specified");
         String result = null;
         try {
@@ -79,7 +84,7 @@ public class HttpUtils {
         return internalCall(jsonRequest);
     }
 
-    public static String postJson(String url, Map<String, String> valueMap) {
+    public static String postJson(String url, Map<String, String> valueMap) throws IOException {
         Assert.isTrue(url.contains(HTTP_SCHEMA) || url.contains(HTTPS_SCHEMA), "Http schema not specified");
         String result = null;
         try {
@@ -90,15 +95,19 @@ public class HttpUtils {
         return result;
     }
 
-    private static String internalCall(Request request) {
-        Response response;
+    private static String internalCall(Request request) throws IOException {
         String result = null;
-        try {
-            response = client.newCall(request).execute();
-            result = Optional.ofNullable(response.body().string()).get();
-        } catch (IOException e) {
-            logger.error(e.getMessage());
+        try (Response response = client.newCall(request).execute()) {
+            int code = response.code();
+            if (code == 200) {
+                ResponseBody body = response.body();
+                if (body == null) {
+                    return null;
+                } else {
+                    return body.string();
+                }
+            }
+            throw new RuntimeException("failed");
         }
-        return result;
     }
 }

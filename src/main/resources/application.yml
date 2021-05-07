@@ -3,9 +3,9 @@ beer:
     app-name: hello
 server:
   port: 10000
-  ssl:
-    key-store: src/main/resources/ssl/my.keystore
-    key-store-password: helloxc
+#  ssl:
+#    key-store: src/main/resources/ssl/my.keystore
+#    key-store-password: helloxc
 spring:
   datasource:
     hikari:
