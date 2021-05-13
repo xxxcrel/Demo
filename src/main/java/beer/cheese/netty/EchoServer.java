@@ -3,6 +3,7 @@ package beer.cheese.netty;
 import org.jetbrains.annotations.NotNull;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -14,6 +15,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class EchoServer {
+
     private int port;
 
     public EchoServer(int port) {
@@ -33,14 +35,22 @@ public class EchoServer {
                             ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                                 @Override
                                 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                    ctx.write(msg);
-                                    ctx.flush();
+                                    System.out.println("first inbound Handler");
+                                    System.out.println(msg);
+                                    super.channelRead(ctx, msg);
                                 }
 
                                 @Override
                                 public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
                                     cause.printStackTrace();
                                     ctx.close();
+                                }
+                            }).addLast(new ChannelInboundHandlerAdapter(){
+                                @Override
+                                public void channelRead(@NotNull ChannelHandlerContext ctx, @NotNull Object msg) throws Exception {
+                                    System.out.println("second inbound Handler");
+                                    ctx.write(msg);
+                                    ctx.flush();
                                 }
                             });
                         }

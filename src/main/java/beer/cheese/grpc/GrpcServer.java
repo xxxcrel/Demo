@@ -1,7 +1,13 @@
 package beer.cheese.grpc;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import beer.cheese.grpc.transport.HelloServiceGrpc;
 import beer.cheese.grpc.transport.Transport;
@@ -23,7 +29,20 @@ public class GrpcServer {
 
     public GrpcServer(ServerBuilder builder, int port) {
         this.port = port;
-        this.server = builder.addService(new GrpcService()).build();
+        this.server = builder
+                .executor(new ThreadPoolExecutor(3, 3, 20L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1), new ThreadFactoryBuilder().setNameFormat("biz").build(), new RejectedExecutionHandler() {
+                    @Override
+                    public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+                        System.out.println("Rejected Runnable" + r);
+                    }
+                }))
+                .addService(new GrpcService()).build();
+    }
+
+    public static void main(String[] args) throws Exception {
+        GrpcServer grpcServer = new GrpcServer(51477);
+        grpcServer.start();
+        grpcServer.blockUntilShutdown();
     }
 
     public void start() throws IOException {
@@ -59,18 +78,19 @@ public class GrpcServer {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        GrpcServer grpcServer = new GrpcServer(51477);
-        grpcServer.start();
-        grpcServer.blockUntilShutdown();
-    }
-
     @CommonsLog
     private static class GrpcService extends HelloServiceGrpc.HelloServiceImplBase {
 
         @Override
         public void unary(Transport.Request request, StreamObserver<Transport.Response> responseObserver) {
-            super.unary(request, responseObserver);
+            try {
+                TimeUnit.SECONDS.sleep(10);
+                System.out.println(request.getParams());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onNext(Transport.Response.newBuilder().setMessage("unary: bye bye").build());
+            responseObserver.onCompleted();
         }
 
         @Override
@@ -85,7 +105,7 @@ public class GrpcServer {
             while (count-- > 0) {
                 log.info("empty while");
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(10);
                 } catch (InterruptedException e) {
                     log.error(e.getMessage());
                 }

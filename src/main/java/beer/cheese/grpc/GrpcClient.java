@@ -14,15 +14,31 @@ public class GrpcClient {
 
     private HelloServiceGrpc.HelloServiceBlockingStub blockingStub;
     private HelloServiceGrpc.HelloServiceStub asyncStub;
+    private String name;
 
-    public GrpcClient(Channel channel){
+    public GrpcClient(Channel channel, String identity){
         this.blockingStub = HelloServiceGrpc.newBlockingStub(channel);
         this.asyncStub = HelloServiceGrpc.newStub(channel);
+        this.name = identity;
     }
     public static void main(String[] args) {
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:51477").usePlaintext().build();
-        GrpcClient client = new GrpcClient(channel);
+        GrpcClient client = new GrpcClient(channel, "Client1");
+        GrpcClient client1 = new GrpcClient(channel, "Client2");
+        GrpcClient client2 = new GrpcClient(channel, "Client3");
+        client.unary();
         client.fetch();
+        client1.unary();
+        client1.fetch();
+        client2.unary();
+        client2.fetch();
+    }
+
+    public void unary(){
+        Thread thread = new Thread(() -> {
+            blockingStub.unary(Transport.Request.newBuilder().setParams(name + "says unary").build());
+        });
+        thread.start();
     }
 
     public void fetch(){
@@ -30,7 +46,7 @@ public class GrpcClient {
             @Override
             public void run() {
                 while(true){
-                    Iterator<Transport.Response> response = blockingStub.serverStream(Transport.Request.newBuilder().setParams("hello").build());
+                    Iterator<Transport.Response> response = blockingStub.serverStream(Transport.Request.newBuilder().setParams(name + "says serverStream").build());
                     while(response.hasNext()){
                         Transport.Response resp = response.next();
                         System.out.println(resp.getMessage());
