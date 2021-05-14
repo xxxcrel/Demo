@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.rmi.RemoteException;
-import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 
 import org.springframework.context.annotation.Bean;
@@ -17,8 +14,9 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 public class RmiConfig implements Serializable {
 
     private static final long serialVersionUID = 123L;
+
     @Bean
-    public RmiServiceExporter rmiServiceExporter() {
+    public RmiServiceExporter rmiServiceExporter() throws IOException {
         SimpleService simpleService = new SimpleServiceImpl();
         RmiServiceExporter exporter = new RmiServiceExporter();
         exporter.setServiceName("simple");
@@ -33,11 +31,11 @@ public class RmiConfig implements Serializable {
                 return new ServerSocket(port, 0, InetAddress.getByName("10.66.0.226"));
             }
         });
-        exporter.setRegistryClientSocketFactory(Socket::new);
+        exporter.setRegistryClientSocketFactory(new CustomClientSocket());
         exporter.setServerSocketFactory(new RMIServerSocketFactory() {
             @Override
             public ServerSocket createServerSocket(int port) throws IOException {
-               return new ServerSocket(port, 0, InetAddress.getByName("10.66.0.226"));
+                return new ServerSocket(port, 0, InetAddress.getByName("10.66.0.226"));
             }
         });
         exporter.setClientSocketFactory(new CustomClientSocket());
@@ -46,17 +44,3 @@ public class RmiConfig implements Serializable {
 
 }
 
-//See @RMIClientSocketFactory docs
-//must implements Object.equals and return true
-class CustomClientSocket implements RMIClientSocketFactory, Serializable{
-
-    @Override
-    public boolean equals(Object obj) {
-        return true;
-    }
-
-    @Override
-    public Socket createSocket(String host, int port) throws IOException {
-        return new Socket(InetAddress.getByName("10.66.0.226"), port);
-    }
-}
