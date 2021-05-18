@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
 
+/**
+ * 不在同一目录的Client应包含相同的CustomClientSocket类，且serialVersionUID相同
+ */
 @Configuration
 public class RmiClient {
 
