@@ -1,0 +1,9 @@
+server:
+  port: 51477
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+spring:
+  application:
+    name: registry
