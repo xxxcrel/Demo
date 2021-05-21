@@ -10,6 +10,9 @@ plugins {
 group 'beer.cheese'
 version '1.0-SNAPSHOT'
 
+compileJava{
+    options.compilerArgs << "-XDignore.symbol.file"
+}
 repositories {
     maven { url 'https://maven.aliyun.com/repository/public'}
 }

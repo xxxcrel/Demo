@@ -1,4 +1,4 @@
-package beer.cheese.ioc;
+package beer.cheese.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

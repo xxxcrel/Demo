@@ -1,4 +1,4 @@
-package beer.cheese.ioc;
+package beer.cheese.aop;
 
 import org.springframework.stereotype.Component;
 
