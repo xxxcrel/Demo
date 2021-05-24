@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import beer.cheese.juc.collection.LinkedBlockingQueue;
+
 public class BlockQueueDemo {
     static LinkedBlockingQueue<String> taskQueue = new LinkedBlockingQueue<>(10);
 
