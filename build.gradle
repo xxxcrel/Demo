@@ -30,6 +30,7 @@ dependencies {
 //    testImplementation 'junit:junit:4.13'
 //    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation project(':service')
     //elasticsearch client and data elasticsearch
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.2'
     implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.6.2'

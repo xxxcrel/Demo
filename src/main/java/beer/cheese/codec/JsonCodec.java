@@ -37,7 +37,5 @@ public class JsonCodec {
                     .filter(s -> !s.matches("date_begin_.*|date_end_.*"))
                     .forEach(System.out::println);
         }
-
-
     }
 }

@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+}
+
+group 'beer.cheese'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+//we will create an ordinary jar (for library) rather than an executable jar
+jar {
+    enabled = true
+}
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter'
+}
+
+test {
+    useJUnitPlatform()
+}

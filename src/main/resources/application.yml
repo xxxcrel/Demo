@@ -1,6 +1,4 @@
-beer:
-  cheese:
-    app-name: hello
+
 server:
   port: 10000
 #  ssl:
@@ -12,3 +10,4 @@ spring:
       maximum-pool-size: 1000
   profiles:
     active: jpa
+    include: service

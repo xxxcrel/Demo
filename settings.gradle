@@ -12,4 +12,5 @@ rootProject.name = 'CodeDemo'
 include 'gateway'
 include 'core'
 include 'registry'
+include 'service'
 
