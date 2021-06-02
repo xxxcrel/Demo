@@ -10,4 +10,4 @@ spring:
       maximum-pool-size: 1000
   profiles:
     active: jpa
-    include: service
+#    include: service
