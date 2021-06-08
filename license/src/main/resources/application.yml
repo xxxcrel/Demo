@@ -1,0 +1,9 @@
+server:
+  port: 51466
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:51477/eureka/
+spring:
+  application:
+    name: license

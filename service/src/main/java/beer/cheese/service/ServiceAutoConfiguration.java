@@ -13,17 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @Configuration
 @EnableConfigurationProperties(ServiceProperties.class)
-public class ServiceAutoConfiguration implements ApplicationListener, InitializingBean, BeanPostProcessor {
+public class ServiceAutoConfiguration {
 
-    @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-        System.out.println("before event");
-        System.setProperty("spring.profiles.include", "service");
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-    }
     @Bean
     public FlyService flyService(ServiceProperties properties){
         return new FlyService(properties.getName());
