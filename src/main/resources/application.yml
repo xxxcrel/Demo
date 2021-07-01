@@ -1,6 +1,7 @@
 
 server:
   port: 10000
+  address:
 #  ssl:
 #    key-store: src/main/resources/ssl/my.keystore
 #    key-store-password: helloxc
@@ -8,6 +9,12 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 1000
-  profiles:
-    active: jpa
+#  profiles:
+#    active: jpa
+  redis:
+    client-type: lettuce
 #    include: service
+beer:
+  cheese:
+    cron: 0 * * * * *
+    key: MyValue

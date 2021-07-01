@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -64,10 +65,12 @@ public class App {
 
 @Component
 class TimingPool {
-    @Scheduled(fixedDelay = 15000L)
+
 //    @Async("myTimingPool")
+    @Scheduled(cron = "${beer.cheese.cron}")
     public void timeSchedule() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(5);
+//        TimeUnit.SECONDS.sleep(5);
+        System.out.println("hello");
     }
 
     public void task(String s) {
