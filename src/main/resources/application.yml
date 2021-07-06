@@ -1,6 +1,6 @@
 
 server:
-  port: 10000
+  port: 4444
   address:
 #  ssl:
 #    key-store: src/main/resources/ssl/my.keystore
