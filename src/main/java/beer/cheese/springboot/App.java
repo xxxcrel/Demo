@@ -1,9 +1,12 @@
 package beer.cheese.springboot;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,15 +14,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import beer.cheese.service.FlyService;
 import lombok.extern.apachecommons.CommonsLog;
 
 @SpringBootApplication
@@ -28,22 +34,13 @@ import lombok.extern.apachecommons.CommonsLog;
 @RequestMapping("/api")
 @CommonsLog
 @EnableScheduling
+@CrossOrigin
 public class App extends WebSecurityConfigurerAdapter {
 
+    private static String staticValue;
     @Value("${beer.cheese.key}")
     private String value;
 
-    private static String staticValue;
-
-    @Value("${beer.cheese.key}")
-    private void setValue(String value){
-        App.staticValue = value;
-    }
-
-    @Scheduled(cron = "${beer.cheese.cron}")
-    public void schedule(){
-        System.out.println("hello");
-    }
     public static void main(String[] args) {
 //        System.setProperty("spring.profiles.include", "service");
         ApplicationContext ctx = new SpringApplicationBuilder()
@@ -51,7 +48,7 @@ public class App extends WebSecurityConfigurerAdapter {
 //                .initializers(new ServiceInitializer())
 //                .listeners(new ServiceListener())
                 .run(args);
-        log.info("value is: " +  staticValue);
+        log.info("value is: " + staticValue);
 //        FlyService flyService = ctx.getBean(FlyService.class);
 //        System.out.println("beer config :" + flyService.getModuleName());
 //
@@ -68,7 +65,27 @@ public class App extends WebSecurityConfigurerAdapter {
 //        };
     }
 
+    @Value("${beer.cheese.key}")
+    private void setValue(String value) {
+        App.staticValue = value;
+    }
 
+    @Scheduled(cron = "${beer.cheese.cron}")
+    public void schedule() {
+        System.out.println("hello");
+    }
+
+    @GetMapping("/download")
+    public void download(HttpServletResponse response) {
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=request.json");
+        File something = new File(System.getProperty("user.home").concat("/tmp.json"));
+        try {
+            StreamUtils.copy(new FileInputStream(something), response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @GetMapping("/login")
     public void login(HttpServletRequest request, HttpServletRequest response) {
@@ -96,7 +113,7 @@ public class App extends WebSecurityConfigurerAdapter {
     }
 
     @GetMapping("/remoteIP")
-    public String getRemoteIP(HttpServletRequest request){
+    public String getRemoteIP(HttpServletRequest request) {
         log.info(request.getRemoteAddr());
         return request.getRemoteAddr();
     }

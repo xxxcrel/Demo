@@ -60,6 +60,8 @@ dependencies {
     //ehcache
     implementation 'net.sf.ehcache:ehcache:2.10.6'
     implementation 'org.springframework:spring-context-support:5.3.4'
+    //commons-compress
+    implementation 'org.apache.commons:commons-compress:1.21'
     //gRPC
     implementation 'io.grpc:grpc-netty-shaded:1.36.0'
     implementation 'io.grpc:grpc-protobuf:1.36.0'
