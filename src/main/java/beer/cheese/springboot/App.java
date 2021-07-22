@@ -3,12 +3,16 @@ package beer.cheese.springboot;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveOutputStream;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -82,6 +86,21 @@ public class App extends WebSecurityConfigurerAdapter {
         File something = new File(System.getProperty("user.home").concat("/tmp.json"));
         try {
             StreamUtils.copy(new FileInputStream(something), response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/license")
+    public void downloadLicense(HttpServletResponse response) {
+        try (GZIPOutputStream gzipOut = new GZIPOutputStream(response.getOutputStream());
+             ArchiveOutputStream out = new TarArchiveOutputStream(gzipOut)) {
+            response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=license.tar.gz");
+            File licenseFile = new File(System.getProperty("user.home") + "/node-1");
+            ArchiveEntry entry = out.createArchiveEntry(licenseFile, "node-1");
+            out.putArchiveEntry(entry);
+            StreamUtils.copy(new FileInputStream(licenseFile), out);
+            out.closeArchiveEntry();
         } catch (IOException e) {
             e.printStackTrace();
         }
