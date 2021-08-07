@@ -3,6 +3,7 @@ package beer.cheese.springboot;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.http.Cookie;
@@ -44,6 +45,8 @@ public class App extends WebSecurityConfigurerAdapter {
     private static String staticValue;
     @Value("${beer.cheese.key}")
     private String value;
+    @Value("${server.regex}")
+    private String address;
 
     public static void main(String[] args) {
 //        System.setProperty("spring.profiles.include", "service");
@@ -53,6 +56,9 @@ public class App extends WebSecurityConfigurerAdapter {
 //                .listeners(new ServiceListener())
                 .run(args);
         log.info("value is: " + staticValue);
+        App app = (App)ctx.getBean(App.class);
+        log.info("address: " + app.address);
+        log.info(Pattern.matches(app.address, "/bin/bash | awk '{print $1, $2}'"));
 //        FlyService flyService = ctx.getBean(FlyService.class);
 //        System.out.println("beer config :" + flyService.getModuleName());
 //
@@ -125,11 +131,11 @@ public class App extends WebSecurityConfigurerAdapter {
             log.info("Version: " + cookie.getVersion());
         }
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        //TODO: just override default security config
-    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        //TODO: just override default security config
+//    }
 
     @GetMapping("/remoteIP")
     public String getRemoteIP(HttpServletRequest request) {
