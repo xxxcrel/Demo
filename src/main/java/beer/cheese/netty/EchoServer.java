@@ -1,5 +1,7 @@
 package beer.cheese.netty;
 
+import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -13,6 +15,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
 
 public class EchoServer {
 
@@ -24,7 +27,7 @@ public class EchoServer {
 
     public void run() throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup(8);
         try {
             ServerBootstrap b = new ServerBootstrap(); // (2)
             b.group(bossGroup, workerGroup)
@@ -32,10 +35,14 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
                         @Override
                         public void initChannel(@NotNull SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                            ch.pipeline().addLast(new StringDecoder())
+                                    .addLast(new ChannelInboundHandlerAdapter() {
                                 @Override
                                 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                                    System.out.println("Thread: " + Thread.currentThread());
                                     System.out.println("first inbound Handler");
+                                    TimeUnit.SECONDS.sleep(3);
+                                    System.out.println("Receive: " + msg + " sleep 3s");
                                     System.out.println(msg);
                                     super.channelRead(ctx, msg);
                                 }
