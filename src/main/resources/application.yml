@@ -8,8 +8,8 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 1000
-#  profiles:
-#    active: jpa
+  profiles:
+    active: docker-mysql
   redis:
     client-type: lettuce
 #    include: service
