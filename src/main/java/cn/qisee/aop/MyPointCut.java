@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 import org.springframework.aop.target.HotSwappableTargetSource;
@@ -53,7 +54,13 @@ public class MyPointCut {
     public NameMatchMethodPointcutAdvisor nameMatchMethodPointcutAdvisor(){
         Advice advice = (AfterReturningAdvice) (returnValue, method, args, target) -> System.out.println("returnValue: " + returnValue);
         NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor(advice);
-        advisor.addMethodName("staticMethod");
+        advisor.addMethodName("staticMethod")
+                .addMethodName("doSth");
         return advisor;
+    }
+
+    @Bean
+    public DefaultIntroductionAdvisor defaultIntroductionAdvisor(){
+        return new DefaultIntroductionAdvisor(new LockMixin(), Lockable.class);
     }
 }
