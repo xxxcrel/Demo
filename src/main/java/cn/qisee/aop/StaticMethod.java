@@ -3,7 +3,7 @@ package cn.qisee.aop;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StaticMethod extends IStaticMethod{
+public class StaticMethod implements IStaticMethod{
 
     public String staticMethod(){
         System.out.println("static method");

@@ -11,8 +11,7 @@ public class AopMain {
 //        HotSwappableTargetSource swapper = (HotSwappableTargetSource) ctx.getBean("swapper");
         TargetObject targetObject = ctx.getBean(TargetObject.class);
         targetObject.hello();
-        StaticMethod staticMethod = (StaticMethod) ctx.getBean("staticMethod");
-        staticMethod.staticMethod();
+        IStaticMethod staticMethod = ctx.getBean(IStaticMethod.class);
         staticMethod.doSth();
         Object box = ctx.getBean(Box.class);
         ((Box)box).setSomething("hello");
