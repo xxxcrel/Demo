@@ -1,6 +1,5 @@
 server:
   port: 4444
-  regex: /bin/bash \| awk '\{print \$1, \$2}'[^;|]*
 #  ssl:
 #    key-store: src/main/resources/ssl/my.keystore
 #    key-store-password: helloxc
@@ -9,7 +8,7 @@ spring:
     hikari:
       maximum-pool-size: 1000
   profiles:
-    active: docker-mysql
+    active: h2
   redis:
     client-type: lettuce
 #    include: service

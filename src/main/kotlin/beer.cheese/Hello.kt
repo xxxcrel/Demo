@@ -1,4 +1,4 @@
-package beer.cheese;
+package cn.qisee;
 
 fun main(){
     println("hello kotlin")
