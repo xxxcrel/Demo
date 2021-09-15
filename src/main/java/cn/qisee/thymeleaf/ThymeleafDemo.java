@@ -12,16 +12,12 @@ import java.util.Locale;
 
 import javax.swing.*;
 
-import org.jsoup.Jsoup;
-import org.jsoup.helper.W3CDom;
-import org.jsoup.nodes.Document;
 import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 public class ThymeleafDemo extends JFrame {
     public static void main(String[] args) throws IOException {
@@ -48,21 +44,6 @@ public class ThymeleafDemo extends JFrame {
 //        } catch (ScriptException e) {
 //            e.printStackTrace();
 //        }
-
-        Document doc;
-
-        doc = Jsoup.parse(finalHtml);
-        try (OutputStream os = new FileOutputStream("/Users/wuxc/index.pdf")) {
-            PdfRendererBuilder builder = new PdfRendererBuilder();
-            builder.useFastMode();
-            builder.withW3cDocument(new W3CDom().fromJsoup(doc), null);
-            builder.toStream(os);
-            builder.run();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
