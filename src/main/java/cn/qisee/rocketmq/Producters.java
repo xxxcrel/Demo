@@ -1,5 +1,6 @@
 package cn.qisee.rocketmq;
 
+import java.sql.Time;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -17,22 +18,23 @@ public class Producters {
     static void syncProducer() throws Exception{
         //Instantiate with a producer group name.
         DefaultMQProducer producer = new
-                DefaultMQProducer("please_rename_unique_group_name");
+                DefaultMQProducer("GameGroup");
         // Specify name server addresses.
         producer.setNamesrvAddr("localhost:9876");
-        producer.setSendMsgTimeout(10);
+//        producer.setSendMsgTimeout(10);
         //Launch the instance.
         producer.start();
         for (int i = 0; i < 10; i++) {
             //Create a message instance, specifying topic, tag and message body.
-            Message msg = new Message("Topic-three" /* Topic */,
-                    "TagA" /* Tag */,
-                    ("Hello RocketMQ " +
+            Message msg = new Message("GameNews" /* Topic */,
+                    "MobileGame" /* Tag */,
+                    ("Hello Player, there is a new game" +
                             i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
             );
             //Call send message to deliver message to one of brokers.
             SendResult sendResult = producer.send(msg);
             System.out.printf("%s%n", sendResult);
+            TimeUnit.SECONDS.sleep(10);
         }
         //Shut down once the producer instance is not longer in use.
         producer.shutdown();

@@ -4,18 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,6 +57,20 @@ public class JsonDecodeTest {
         }
     }
 
+    @Test
+    public void testHtmlReplace(){
+        String html = "<script ###echarts###></script>";
+        ClassPathResource hello = new ClassPathResource("hello.html");
+        String helloStr = null;
+        try {
+            helloStr = new String(Files.readAllBytes(hello.getFile().toPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(html.replace("###echarts###", ""));
+        System.out.println(helloStr);
+        System.out.println(helloStr.replace("###echarts-src###", ""));
+    }
     @Test
     public void ipSerializeTest() throws JsonProcessingException {
         IpHolder holder = new IpHolder("0:0:0:0:0:0:1");
@@ -153,6 +173,69 @@ public class JsonDecodeTest {
         System.out.println("hellojfaljdf".matches(regexP));
     }
 
+    @Test
+    public void tt(){
+        List<String> list = new CopyOnWriteArrayList<String>();
+        list.add("hello");
+        list.add("world");
+        list.add("wuxc");
+        Iterator<String> itr = list.iterator();
+        while (itr.hasNext()){
+            String s = itr.next();
+            System.out.println("itr" + s);
+        }
+
+        System.out.println("ListIterator");
+//        while (listItr.hasNext()){
+//            listItr.next();
+//        }
+        ListIterator<String> listItr = list.listIterator();
+        while (listItr.hasPrevious()) {
+            String s = listItr.previous();
+            System.out.println("listItr" + s);
+        }
+    }
+
+    @Test
+    public void testIterator(){
+        ArrayList<Integer> list
+                = new ArrayList<Integer>();
+
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+
+        // Iterator
+        Iterator itr = list.iterator();
+
+        System.out.println("Iterator:");
+        System.out.println("Forward traversal: ");
+
+        while (itr.hasNext())
+            System.out.print(itr.next() + " ");
+
+        System.out.println();
+
+        // ListIterator
+        ListIterator i = list.listIterator();
+
+        System.out.println("ListIterator:");
+        System.out.println("Forward Traversal : ");
+
+        while (i.hasNext())
+            System.out.print(i.next() + " ");
+
+        System.out.println();
+
+        System.out.println("Backward Traversal : ");
+
+        while (i.hasPrevious())
+            System.out.print(i.previous() + " ");
+
+        System.out.println();
+    }
     enum Result {
         SUCCESS, FAILURE
     }

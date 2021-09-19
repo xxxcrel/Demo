@@ -10,7 +10,7 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
-public class Consumers {
+public class SecondConsumer {
     public static void main(String[] args) throws Exception{
         // Instantiate with specified consumer group name.
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name");
@@ -19,8 +19,8 @@ public class Consumers {
         consumer.setNamesrvAddr("localhost:9876");
 
         consumer.setMessageModel(MessageModel.BROADCASTING);
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
+        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
         // Subscribe one more more topics to consume.
         consumer.subscribe("GameNews", "*");
         // Register callback to execute on arrival of messages fetched from brokers.

@@ -9,16 +9,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tbl_role")
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class Role {
 
     @Id
@@ -28,7 +27,7 @@ public class Role {
 
     private String desc;
 
-    @OneToMany
-    private Set<Permission> permissions = new HashSet<>();
+//    @OneToMany
+//    private Set<Permission> permissions = new HashSet<>();
 
 }

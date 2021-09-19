@@ -22,6 +22,7 @@ public class RedisDemo {
 
     @Resource(name = "redisTemplate")
     private ValueOperations<Object, Object> valueOp;
+
     public static void main(String[] args) {
         ApplicationContext context = new SpringApplicationBuilder()
                 .sources(RedisDemo.class)
@@ -31,7 +32,6 @@ public class RedisDemo {
         RedisDemo redisDemo =  context.getBean(RedisDemo.class);
         redisDemo.doSth();
     }
-
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
