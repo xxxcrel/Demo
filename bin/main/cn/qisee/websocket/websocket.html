@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button onclick="">Click</button>
+    <script>
+    var sendAct = () => {
+    var socket = new SockJS("http://localhost:4444/sockjs");
+    var stompClient = webstomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log("connected");
+
+      //后端使用SimpMessagingTemplate发送的消息
+      stompClient.subscribe("/topic/notification", data => {
+        data = JSON.parse(data.body);
+        console.log(data);
+      })
+      //后端使用@SendTo(“/broadcast/greeting”)
+      stompClient.subscribe("/broadcast/greeting", data => {
+        data = JSON.parse(data.body);
+        console.log(data);
+      })
+
+      stompClient.send("/cheese/greeting", "i'm wuxuecheng");
+      stompClient.send("/cheese/notify", "byebye");
+    });
+  }
+    </script>
+</body>
+</html>
