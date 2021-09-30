@@ -1,0 +1,9 @@
+beer:
+  cheese:
+    app-name: hello
+    map:
+      "[/key1]": "value1"
+      "[/key2]": "value2"
+      "/key3": "value3"
+      hello: world
+      www: ppp
