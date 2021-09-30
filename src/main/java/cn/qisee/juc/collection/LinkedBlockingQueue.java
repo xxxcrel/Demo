@@ -1,5 +1,7 @@
 package cn.qisee.juc.collection;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.qisee.juc.Condition;
@@ -34,6 +36,11 @@ public class LinkedBlockingQueue<T> {
         } finally {
             takeLock.unlock();
         }
+    }
+
+    public static void staticTest(){
+        LinkedBlockingQueue queue = new LinkedBlockingQueue(2);
+        queue.capacity = 2;
     }
 
     /**

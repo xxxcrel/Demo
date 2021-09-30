@@ -3,11 +3,11 @@ server:
 #  ssl:
 #    key-store: src/main/resources/ssl/my.keystore
 #    key-store-password: helloxc
-spring:
-  task:
-    execution:
-      pool:
-        core-size:
+#spring:
+#  task:
+#    execution:
+#      pool:
+#        core-size:
   datasource:
     hikari:
       maximum-pool-size: 1000

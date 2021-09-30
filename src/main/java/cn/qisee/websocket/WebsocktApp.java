@@ -12,6 +12,9 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -21,6 +24,8 @@ import lombok.extern.apachecommons.CommonsLog;
 @SpringBootApplication
 @Controller
 @CommonsLog
+@RestController
+@CrossOrigin
 public class WebsocktApp extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -32,6 +37,10 @@ public class WebsocktApp extends WebSecurityConfigurerAdapter {
                 .run(args);
     }
 
+    @RequestMapping("/download")
+    public void download(){
+        System.out.println("download");
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().permitAll();
@@ -46,7 +55,6 @@ public class WebsocktApp extends WebSecurityConfigurerAdapter {
         log.info("received message " + message);
         return "hello " + message;
     }
-
     @MessageMapping("/notify")
     public void hello(String message) {
         log.info("hello start send");

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,6 +49,7 @@ import lombok.extern.apachecommons.CommonsLog;
 @CommonsLog
 @EnableScheduling
 @CrossOrigin
+@EnableAsync
 public class App extends WebSecurityConfigurerAdapter {
 
     private static String staticValue;
@@ -81,9 +85,22 @@ public class App extends WebSecurityConfigurerAdapter {
 //        };
     }
 
+    @PostConstruct
+    public void init(){
+        async();
+    }
+
     @Value("${beer.cheese.key}")
     private void setValue(String value) {
         App.staticValue = value;
+    }
+
+    @Async
+    public void async(){
+        System.out.println("outer async");
+        while (true) {
+            System.out.println("async");
+        }
     }
 
     @Scheduled(cron = "${beer.cheese.cron}")
