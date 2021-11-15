@@ -20,3 +20,7 @@ beer:
   cheese:
     cron: 0 * * * * *
     key: MyValue
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
