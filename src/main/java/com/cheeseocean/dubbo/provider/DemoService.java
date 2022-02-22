@@ -16,6 +16,8 @@
  */
 package com.cheeseocean.dubbo.provider;
 
+import org.apache.dubbo.config.annotation.DubboReference;
+
 public interface DemoService {
 
     String sayHello(String name);

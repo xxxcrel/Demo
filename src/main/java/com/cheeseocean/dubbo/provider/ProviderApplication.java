@@ -16,6 +16,10 @@
  */
 package com.cheeseocean.dubbo.provider;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ProtocolConfig;
@@ -23,19 +27,15 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-
-public class Application {
+public class ProviderApplication {
 
     public static void main(String[] args) throws Exception {
-        System.setProperty("dubbo.application.logger", "log4j2");
+        System.setProperty("dubbo.application.logger", "slf4j");
         System.setProperty("native", "true");
 //        if (isClassic(args)) {
 //            startWithExport();
 //        } else {
-            startWithBootstrap();
+        startWithBootstrap();
 //        }
         System.in.read();
     }
@@ -47,7 +47,11 @@ public class Application {
     private static void startWithBootstrap() {
         ServiceConfig<DemoServiceImpl> service = new ServiceConfig<>();
         service.setInterface(DemoService.class);
+        service.setOnconnect("onConnect");
         service.setRef(new DemoServiceImpl());
+        ServiceConfig<HelloServiceImpl> helloService = new ServiceConfig<>();
+        helloService.setInterface(HelloService.class);
+        helloService.setRef(new HelloServiceImpl());
 
         DubboBootstrap bootstrap = DubboBootstrap.getInstance();
 
@@ -59,11 +63,10 @@ public class Application {
         applicationConfig.setParameters(m);
 
         bootstrap.application(applicationConfig)
-            .registry(new RegistryConfig("nacos://127.0.0.1:8848"))
-            .protocol(new ProtocolConfig(CommonConstants.DUBBO, -1))
-            .service(service)
-            .start()
-            .await();
+                .protocol(new ProtocolConfig(CommonConstants.DUBBO, -1))
+                .service(service)
+                .start()
+                .await();
     }
 
     private static void startWithExport() throws InterruptedException {

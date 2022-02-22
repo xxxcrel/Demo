@@ -16,19 +16,21 @@
  */
 package com.cheeseocean.dubbo.consumer;
 
-import com.cheeseocean.dubbo.provider.DemoService;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ConsumerConfig;
+import org.apache.dubbo.config.MethodConfig;
 import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 
+import com.cheeseocean.dubbo.provider.DemoService;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Application {
+public class ConsumerApplication {
 
     public static void main(String[] args) {
         System.setProperty("dubbo.application.logger", "log4j2");
@@ -48,6 +50,11 @@ public class Application {
         ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
         reference.setInterface(DemoService.class);
         reference.setGeneric("false");
+        reference.setStub("com.cheeseocean.dubbo.consumer.CustomDemoServiceStub");
+        reference.setOnconnect("onConnect");
+        reference.setUrl("dubbo://127.0.0.1:20880/com.cheeseocean.dubbo.provider.DemoService");
+
+        ConsumerConfig consumerConfig = new ConsumerConfig();
 
         DubboBootstrap bootstrap = DubboBootstrap.getInstance();
         ApplicationConfig applicationConfig = new ApplicationConfig("dubbo-demo-api-consumer");
@@ -58,14 +65,13 @@ public class Application {
         applicationConfig.setParameters(m);
 
         bootstrap.application(applicationConfig)
-                .registry(new RegistryConfig("nacos://127.0.0.1:8848"))
                 .protocol(new ProtocolConfig(CommonConstants.DUBBO, -1))
                 .reference(reference)
                 .start();
 
         DemoService demoService = bootstrap.getCache().get(reference);
         String message = demoService.sayHello("Native");
-        System.out.println(message);
+//        System.out.println(message);
     }
 
     private static void runWithRefer() {

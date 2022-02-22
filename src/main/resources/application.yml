@@ -24,3 +24,17 @@ spring:
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
+
+  application:
+    name: test-provider
+  data:
+    elasticsearch:
+      repositories:
+        enabled: false
+dubbo:
+  scan:
+    base-packages: com.cheeseocean.dubbo
+  protocol:
+    name: dubbo
+  application:
+    logger: slf4j

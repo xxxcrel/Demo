@@ -84,9 +84,13 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     //dubbo
     implementation 'org.apache.dubbo:dubbo:3.0.5'
+    //dubbo spring boot
+    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.0.5'
     implementation 'com.alibaba.nacos:nacos-api:2.0.3'
     implementation 'com.alibaba.nacos:nacos-common:2.0.3'
     implementation 'com.alibaba.nacos:nacos-client:2.0.3'
+    //zookeeper
+//    implementation 'org.apache.zookeeper:zookeeper:3.7.0'
 }
 def GRPC_GENERATED_DIR = 'grpc'
 def separator = File.separator

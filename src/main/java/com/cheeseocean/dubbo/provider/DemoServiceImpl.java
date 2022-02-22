@@ -16,9 +16,12 @@
  */
 package com.cheeseocean.dubbo.provider;
 
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.rpc.RpcContext;
 
 
+@DubboService(onconnect = "onConnect")
 public class DemoServiceImpl implements DemoService {
 
     @Override
@@ -27,5 +30,7 @@ public class DemoServiceImpl implements DemoService {
         return "Hello " + name ;
     }
 
-
+    public void onConnect(){
+        System.out.println("onConnect");
+    }
 }
