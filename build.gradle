@@ -4,122 +4,124 @@ plugins {
     id 'io.spring.dependency-management'
     id "io.freefair.lombok"
     id 'com.google.protobuf'
-    id 'org.jetbrains.kotlin.jvm'
+//    id 'org.jetbrains.kotlin.jvm'
 }
 
-group 'beer.cheese'
-version '1.0-SNAPSHOT'
-
-compileJava{
+compileJava {
     options.compilerArgs << "-XDignore.symbol.file"
 }
-repositories {
-    maven { url 'https://maven.aliyun.com/repository/public'}
-}
 
-dependencies {
-    //junit5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-    testImplementation ('org.springframework.boot:spring-boot-starter-test'){
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-//        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
+allprojects {
+    group = 'com.cheeseocean.demo'
+    version = '1.0.0'
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        mavenLocal()
     }
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+            vendor = JvmVendorSpec.ORACLE
+        }
+    }
+
+}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.freefair.lombok'
+
+    ext {
+        set("springCloudVersion", "2020.0.1")
+    }
+
+    dependencies {
+        //junit5
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//        exclude group: 'org.junit.jupiter', module: 'junit-jupiter-engine'
+        }
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 
 //    testImplementation 'junit:junit:4.13'
 //    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation project(':service')
-    //elasticsearch client and data elasticsearch
-    implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.2'
-    implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.6.2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-    //spring mvc
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+        //elasticsearch client and data elasticsearch
+        implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.6.2'
+        implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.6.2'
+        implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+        //spring mvc
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    //data jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    //spring security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security:spring-security-acl'
-    //vertx
-    implementation 'io.vertx:vertx-web:4.0.3'
-    implementation 'mysql:mysql-connector-java:8.0.22'
-    //H2Database
-    implementation 'com.h2database:h2:1.4.200'
-    implementation 'org.apache.commons:commons-dbcp2:2.7.0'
-    //lombok
-    implementation 'org.projectlombok:lombok:1.18.16'
-    //OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    //ehcache
-    implementation 'net.sf.ehcache:ehcache:2.10.6'
-    implementation 'org.springframework:spring-context-support:5.3.4'
-    //commons-compress
-    implementation 'org.apache.commons:commons-compress:1.21'
+        implementation 'org.springframework.boot:spring-boot-starter-websocket'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        //data jpa
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+        //spring security
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.security:spring-security-acl'
+        //vertx
+        implementation 'io.vertx:vertx-web:4.0.3'
+        implementation 'mysql:mysql-connector-java:8.0.22'
+        //H2Database
+        implementation 'com.h2database:h2:1.4.200'
+        implementation 'org.apache.commons:commons-dbcp2:2.7.0'
+        //lombok
+        implementation 'org.projectlombok:lombok:1.18.16'
+        //OkHttp
+        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+        //ehcache
+        implementation 'net.sf.ehcache:ehcache:2.10.6'
+        implementation 'org.springframework:spring-context-support:5.3.4'
+        //commons-compress
+        implementation 'org.apache.commons:commons-compress:1.21'
 //    implementation 'org.apache.commons:commons-io:1.21'
-    //gRPC
-    implementation 'io.grpc:grpc-netty-shaded:1.36.0'
-    implementation 'io.grpc:grpc-protobuf:1.36.0'
-    implementation 'io.grpc:grpc-stub:1.36.0'
+        //gRPC
+        implementation 'io.grpc:grpc-netty-shaded:1.36.0'
+        implementation 'io.grpc:grpc-protobuf:1.36.0'
+        implementation 'io.grpc:grpc-stub:1.36.0'
 //    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
-    //RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.11'
-    //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    //rocketmq
-    implementation 'org.apache.rocketmq:rocketmq-client:4.9.0'
-    implementation 'org.apache.rocketmq:rocketmq-store:4.9.0'
-    //themyleaf
-    implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
-    implementation 'org.thymeleaf:thymeleaf-spring5:3.0.12.RELEASE'
-    //fluent-mybaits
+        //RxJava
+        implementation 'io.reactivex.rxjava3:rxjava:3.0.11'
+        //kotlin
+        implementation "org.jetbrains.kotlin:kotlin-stdlib"
+        //rocketmq
+        implementation 'org.apache.rocketmq:rocketmq-client:4.9.0'
+        implementation 'org.apache.rocketmq:rocketmq-store:4.9.0'
+        //themyleaf
+        implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
+        implementation 'org.thymeleaf:thymeleaf-spring5:3.0.12.RELEASE'
+        //fluent-mybaits
 
-    implementation 'org.springframework.kafka:spring-kafka'
-    //dubbo
-    implementation 'org.apache.dubbo:dubbo:3.0.5'
-    //dubbo spring boot
-    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.0.5'
-    implementation 'com.alibaba.nacos:nacos-api:2.0.3'
-    implementation 'com.alibaba.nacos:nacos-common:2.0.3'
-    implementation 'com.alibaba.nacos:nacos-client:2.0.3'
-    //zookeeper
+        implementation 'org.springframework.kafka:spring-kafka'
+        //dubbo
+        implementation 'org.apache.dubbo:dubbo:3.0.5'
+        //dubbo spring boot
+        implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.0.5'
+        implementation 'com.alibaba.nacos:nacos-api:2.0.3'
+        implementation 'com.alibaba.nacos:nacos-common:2.0.3'
+        implementation 'com.alibaba.nacos:nacos-client:2.0.3'
+        //zookeeper
 //    implementation 'org.apache.zookeeper:zookeeper:3.7.0'
-}
-def GRPC_GENERATED_DIR = 'grpc'
-def separator = File.separator
-sourceSets{
-    main{
-        java{
-            srcDirs "${GRPC_GENERATED_DIR}${separator}main${separator}java"
-            srcDirs "${GRPC_GENERATED_DIR}${separator}main${separator}grpc"
-        }
     }
-}
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.12.0"
-    }
-    plugins {
-        grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.36.0'
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
     }
-    generateProtoTasks {
-        all()*.plugins {
-            grpc {}
-        }
-    }
-    generatedFilesBaseDir = "${projectDir}/${GRPC_GENERATED_DIR}"
-}
 
-test {
-    useJUnitPlatform()
+    test {
+        useJUnitPlatform()
+    }
 }

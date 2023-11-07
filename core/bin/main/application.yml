@@ -1,9 +1,0 @@
-server:
-  port: 51499
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:51477/eureka/
-spring:
-  application:
-    name: core
