@@ -13,7 +13,7 @@ pluginManagement{
     }
 }
 
-rootProject.name = 'CodeDemo'
+rootProject.name = 'Demo'
 
 include 'gateway'
 include 'core'
